@@ -29,6 +29,10 @@ Route::middleware('web')->group(function () {
             return view('dashboard');
         })->name('dashboard.form');
 
+        Route::get('/users', function () {
+            return view('users');
+        })->name('users.form');
+
 
     });
 
