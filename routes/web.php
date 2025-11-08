@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -24,17 +25,29 @@ Route::middleware('web')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     //For Secured Endpoints
     Route::middleware('auth')->group(function () {
-        
+
         Route::get('/dashboard', function () {
             return view('dashboard');
         })->name('dashboard.form');
 
-        Route::get('/users', function () {
-            return view('users');
-        })->name('users.form');
+        //Users
+        Route::get('/users', [UserController::class, 'index']
+        )->name('users.form');
 
+        Route::post('/create-user', [UserController::class,'create_users'])
+        ->name('create-user');
+        //Users
 
+        //Store
+        //Store
+
+        //Retailer
+        //Retailer
+
+        //Entry Products
+        //Entry Products
+
+        //Sells
+        //Sells
     });
-
-
 });

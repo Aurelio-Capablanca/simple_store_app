@@ -6,7 +6,6 @@
         <h5 class="modal-title" id="userModalLabel">Create User</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
       <form>
       <!-- <form action="{{ route('users.store') }}" method="POST"> -->
         <!-- @csrf -->
