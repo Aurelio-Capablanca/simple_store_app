@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RetailerController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -9,11 +11,7 @@ Route::middleware('web')->group(function () {
 
     Route::get('/', function () {
         return view('welcome');
-    });
-
-    Route::get('/new_dashboard', function () {
-        return file_get_contents(resource_path('dashboard.html'));
-    });
+    });    
 
     Route::get('/login', function () {
         return view('login');
@@ -60,10 +58,26 @@ Route::middleware('web')->group(function () {
         //Retailer
 
         //Store
-        
+        Route::get('/stores', [StoreController::class, 'index'])->name('stores.form');
+        Route::get('/edit-store/{id}', [StoreController::class,'edit_modal'])->name('edit-store.modal');
+
+        Route::post('/create-store', [StoreController::class, 'create_stores'])->name('create-store');
+        Route::put('/update-store/{id}', [StoreController::class, 'update_store'])->name('update-store');
+        Route::delete('/delete-store/{id}', [StoreController::class, 'delete_store'])->name('delete-store');
         //Store
 
+
+        //Category
+        //Category
+
+
+        //Location
+        //Location
+
         //Entry Products
+        Route::get('/products', [ProductController::class, 'index'])->name('product.form');
+        
+
         //Entry Products
 
         //Sells
