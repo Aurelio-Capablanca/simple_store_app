@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard - Simple Store')
+@section('title', 'Users - Simple Store')
 @section('content')
     <div class="container-fluid py-2">
         @if ($errors->any())
@@ -11,16 +11,57 @@
                 </ul>
             </div>
         @endif
-
+        <!-- button -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
             New User
         </button>
-        <div class="row">
-
+        <!-- table -->
+        <div class="card-body">
+            <div class="col s12 m12 12">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Store Name</th>
+                            <th class="actions-column">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-rows">
+                        @foreach($users as $user)
+                            <tr>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->email}}</td>
+                                <td>
+                                    @if (!$user->store_name)
+                                        {{ 'No Store Registered' }}
+                                    @else
+                                        {{$user->store_name}}
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{route('edit-user.modal', $user->id)}}" class="btn btn-sm btn-info"
+                                        data-bs-toggle="modal" id="editUsers" data-bs-target="#editUserModal"
+                                        onclick="event.preventDefault();">
+                                        Edit
+                                    </a>
+                                    {{-- <button class="btn btn-sm btn-danger">Delete</button> --}}
+                                    <form action="{{ route('delete-user', $user->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this user?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-
     </div>
-
     <!-- Modal -->
     <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -67,4 +108,27 @@
             </div>
         </div>
     </div>
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editModal = document.getElementById('editUserModal');
+
+            editModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const url = button.getAttribute('href');
+
+                fetch(url)
+                    .then(response => response.text())
+                    .then(html => {
+                        editModal.querySelector('.modal-dialog').innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Error loading modal:', error);
+                    });
+            });
+        });
+    </script>
 @endsection

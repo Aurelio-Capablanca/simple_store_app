@@ -41,8 +41,9 @@
         @include('layouts.fixed_plugin')
     </main>
     <!--   Core JS Files   -->
-    <script src="{{asset('../assets/js/core/popper.min.js')}}"></script>
-    <script src="{{asset('../assets/js/core/bootstrap.min.js')}}"></script>
+    <!-- <script src="{{--asset('../assets/js/core/popper.min.js')--}}"></script> -->
+    <!-- <script src="{{--asset('../assets/js/core/bootstrap.min.js')--}}"></script> -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('../assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('../assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
     <script src="{{asset('../assets/js/plugins/chartjs.min.js')}}"></script>

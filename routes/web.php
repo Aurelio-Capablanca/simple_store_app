@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RetailerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -31,18 +32,36 @@ Route::middleware('web')->group(function () {
         })->name('dashboard.form');
 
         //Users
-        Route::get('/users', [UserController::class, 'index']
+        Route::get(
+            '/users',
+            [UserController::class, 'index']
         )->name('users.form');
 
-        Route::post('/create-user', [UserController::class,'create_users'])
-        ->name('create-user');
+        Route::get('/edit-users/{id}', [UserController::class, 'edit_modal'])
+            ->name('edit-user.modal');
+
+        Route::post('/create-user', [UserController::class, 'create_users'])
+            ->name('create-user');
+
+        Route::put('/update-user/{id}', [UserController::class, 'update_users'])
+            ->name('update-user');
+
+        Route::delete('/delete-user/{id}', [UserController::class, 'delete_users'])
+            ->name('delete-user');
         //Users
 
-        //Store
-        //Store
+        //Retailer
+        Route::get('/retailers', [RetailerController::class, 'index'])->name('retailer.form');
+        Route::get('/edit-retailer/{id}', [RetailerController::class, 'edit_modal'])->name('edit-retailer.modal');
 
+        Route::post('/create-retailer', [RetailerController::class, 'create_retailer'])->name('create-retailer');
+        Route::put('/update-retailer/{id}', [RetailerController::class, 'update_retailer'])->name('update-retailer');
+        Route::delete('/delete-retailer/{id}', [RetailerController::class, 'delete_retailer'])->name('delete-retailer');
         //Retailer
-        //Retailer
+
+        //Store
+        
+        //Store
 
         //Entry Products
         //Entry Products
