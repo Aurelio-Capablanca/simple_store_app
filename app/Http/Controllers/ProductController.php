@@ -24,7 +24,7 @@ class ProductController extends Controller
 
     public function call_jwt()
     {
-        $rust_url = 'http://127.0.0.1:9091/api/test-access';
+        $rust_url = 'http://127.0.0.1:9091/api/test-identity';
         $token = $this->generate_token();
 
         $client = new \GuzzleHttp\Client();
