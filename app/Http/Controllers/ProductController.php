@@ -19,8 +19,24 @@ class ProductController extends Controller
             select('name', 'email', 'str.store_name', 'usr.id')
             ->leftJoin('store as str', 'str.id_store', '=', 'usr.id_store')
             ->get();
-        $jwt = $this->generate_token();
-        return view("product", compact("users", "stores","jwt"));
+        return view("product", compact("users", "stores"));
+    }
+
+    public function call_jwt()
+    {
+        $rust_url = 'http://127.0.0.1:9091/api/test-access';
+        $token = $this->generate_token();
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get($rust_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        return response($response->getBody(), $response->getStatusCode())
+            ->header('Content-Type', 'application/json');
     }
 
     //Logical operations
@@ -29,10 +45,14 @@ class ProductController extends Controller
     {
         $user = Auth::user();
         $payload = [
+            'iss' => 'http://localhost',
             'sub' => $user->id,
             'exp' => time() + 3600,
+            'iat' => time(),
         ];
-        return JWT::encode($payload, 'MGACAQAwEAYHKoZIzj0CAQYFK4EEACMESTBHAgEBBEIBGV7Ryk5PYpRLoFh+0f3KU7aS1bxmUy4QDTA7jfFyF6NkVF9mjXToZ9tSVFsPaOX79r86zZSwOihlAzQmEriPA4Q=', 'EC512');
+        $secret = "791376c27ad90e5594339a004d26ef259e8faaba";
+        $token = JWT::encode($payload, $secret, 'HS256');
+        return $token;
     }
 
 

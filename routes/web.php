@@ -29,6 +29,11 @@ Route::middleware('web')->group(function () {
             return view('dashboard');
         })->name('dashboard.form');
 
+        Route::get(
+            '/token-get',
+            [ProductController::class, 'call_jwt']
+        )->name('token-get');
+
         //Users
         Route::get(
             '/users',

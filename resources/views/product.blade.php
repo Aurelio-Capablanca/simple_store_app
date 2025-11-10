@@ -11,10 +11,31 @@
                 </ul>
             </div>
         @endif
-         <!-- button -->
+        <!-- button -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal">
             New Product
         </button>
+        <a href="{{route('token-get')}}" class="btn btn-sm btn-info" id="gettoken" onclick="call_service();">
+            Get Token
+        </a>
+        <script>
+            function call_service() {
+                event.preventDefault();
+                fetch("{{ route('token-get') }}")
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("JWT:", data.token);
+                        // You can store it in localStorage or use it directly
+                        localStorage.setItem('jwt_token', data.token);
+                    })
+                    .catch(error => console.error("Error fetching token:", error));
+                // fetch("localhost:9091/api/test-access", {
+                //     headers: {
+                //         Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+                //     }
+                // }).catch(error => console.error("Error fetching at Service:", error));
+            }
+        </script>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
@@ -25,9 +46,8 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ route('create-user') }}">
+                <form>
                     <div class="modal-body">
-                        @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" name="name" id="name" class="form-control" required>
