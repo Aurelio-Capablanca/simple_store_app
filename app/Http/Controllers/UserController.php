@@ -44,7 +44,7 @@ class UserController extends Controller
     }
 
     public function update_users(UserUpdatesRequest $request, $id)
-    {
+    {        
         $user = User::find($id);
         $user->update($request->validated());
         return redirect()->route("users.form")->with("success", "User Updated");
