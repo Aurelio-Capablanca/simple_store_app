@@ -52,12 +52,12 @@
                             <label for="name" class="form-label">Insert Code</label>
                             <input type="text" name="unique_code" id="unique_code" class="form-control" required>
                         </div>
-                        <button type="button" class="btn btn-primary" id="add_product">Add Product</button>
                         <div id="container-products"></div>
+                        <button type="button" class="btn btn-primary" id="add_product">Add Product</button>                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button id="save_products" class="btn btn-primary ">Save</button>
                     </div>
                 </form>
             </div>
