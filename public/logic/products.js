@@ -1,22 +1,21 @@
 function getHeaders() {
     return {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
     }
 }
 
 
-function saveRow(api, data) {
+function sendPayload(api, data) {
     fetch(api, {
         method: 'POST',
         headers: getHeaders(),
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
     }).then(function (request) {
         if (request.ok) {
             request.json().then(function (response) {
-                if (response.status != 0) {
-                    alert('Success!');
-                }
+                alert('Success!');
             });
         } else {
             console.log(request.status + ' ' + request.text);
@@ -26,6 +25,26 @@ function saveRow(api, data) {
     });
 }
 
+
+function fillSelect(submitted_object, select, selected) {
+    let content = '';
+    if (!selected) {
+        content += '<option value="0" disabled selected>Select an Option</option>';
+    }
+    submitted_object.map(function (row) {
+        value = Object.values(row)[0];
+        text = Object.values(row)[1];
+        if (value != selected) {
+            content += `<option value="${value}">${text}</option>`;
+        } else {
+            content += `<option value="${value}" selected>${text}</option>`;
+        }
+    });
+    if (submitted_object.length == 0) {
+        content += '<option>No available options</option>';
+    }
+    document.getElementById(select).innerHTML = content;
+}
 
 
 /********************************* */
@@ -118,6 +137,7 @@ document.getElementById('add_product').addEventListener('click', function (event
     container.insertAdjacentHTML("beforeend", add_product_element(handler));
     console.log(listCreatedProduct);
     //Set Listener outside String HMTL
+    fillSelect(categories, `id_category-${handler.series_id}`, null)
     document.getElementById(`eraseProducts-${handler.series_id}`)
         .addEventListener("click", () => {
             document.getElementById(`product-create-${handler.series_id}`).remove();
@@ -130,13 +150,14 @@ document.getElementById('add_product').addEventListener('click', function (event
 });
 
 document.getElementById('save_products').addEventListener('click', function (event) {
+    console.log(save_products_url);
     event.preventDefault();
     let load_product = {
-        retailer_bill: process_form_product(),
-        list_product: process_bill()
+        retailer_bill: process_bill(),
+        list_product: process_form_product()
     }
     console.log(load_product);
-    //isaveRow('',load_product);
+    sendPayload(save_products_url, load_product);
 });
 
 function process_form_product() {
@@ -144,15 +165,15 @@ function process_form_product() {
     listCreatedProduct.forEach(data => {
         console.log(data);
         object_list.push({
-            "name": document.getElementById(`product_name-${data}`).value,
-            "description": document.getElementById(`product_description-${data}`).value,
-            "price": document.getElementById(`product_price-${data}`).value,
-            "buying_price": document.getElementById(`buying_price-${data}`).value,
+            "product_name": document.getElementById(`product_name-${data}`).value,
+            "product_description": document.getElementById(`product_description-${data}`).value,
+            "product_price": guard_empty_value(document.getElementById(`product_price-${data}`).value, false, true),
+            "buying_price": guard_empty_value(document.getElementById(`buying_price-${data}`).value, false, true),
             "has_discount": document.getElementById(`has_discount-${data}`).checked,
             "has_stock": document.getElementById(`has_stock-${data}`).checked,
             "is_available": document.getElementById(`is_available-${data}`).checked,
-            "expiring_date": document.getElementById(`expiring_date-${data}`).value,
-            "id_category": document.getElementById(`id_category-${data}`).value,
+            "expiring_date": guard_empty_value(document.getElementById(`expiring_date-${data}`).value, false, false),
+            "id_category": guard_empty_value(document.getElementById(`id_category-${data}`).value, true, false),
         })
     });
     return object_list;
@@ -160,12 +181,21 @@ function process_form_product() {
 
 function process_bill() {
     return {
-        "id_store": document.getElementById('id_store').value,
-        "id_retailer": document.getElementById('id_retailer').value,
-        "timestamp_bill_retailer": document.getElementById('timestap_bill_retailer').value,
+        "id_store": guard_empty_value(document.getElementById('id_store').value, true, false),
+        "id_retailer": guard_empty_value(document.getElementById('id_retailer').value, true, false),
+        "timestamp_bill_retailer": guard_empty_value(document.getElementById('timestap_bill_retailer').value, false, false),
     }
 }
 
+function guard_empty_value(data, isnumeric, isdouble) {
+    if (isnumeric) {
+        return parseInt(data || 0);
+    }
+    if (isdouble) {
+        return parseFloat(data || 0.0);
+    }
+    return data === "" ? null : data
+}
 
 /*------------------------------------------------------------------------------------------------------------------------------------ */
 
@@ -189,21 +219,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-//Function for tester 
-function call_service() {
-    event.preventDefault();
-    fetch("{{ route('token-get') }}")
-        .then(response => response.json())
-        .then(data => {
-            console.log("JWT:", data.token);
-            // You can store it in localStorage or use it directly
-            localStorage.setItem('jwt_token', data.token);
-        })
-        .catch(error => console.error("Error fetching token:", error));
-    // fetch("localhost:9091/api/test-access", {
-    //     headers: {
-    //         Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
-    //     }
-    // }).catch(error => console.error("Error fetching at Service:", error));
-}
+
 

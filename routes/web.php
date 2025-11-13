@@ -81,7 +81,7 @@ Route::middleware('web')->group(function () {
 
         //Entry Products
         Route::get('/products', [ProductController::class, 'index'])->name('product.form');
-        
+        Route::post('/load-product', [ProductController::class, 'load_products'])->name('load-product');
 
         //Entry Products
 

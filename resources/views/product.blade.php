@@ -39,12 +39,18 @@
                             <label for="id_store" class="form-label">Store</label>
                             <select name="id_store" id="id_store" class="form-select">
                                 <option value="">Select store...</option>
+                                @foreach ($stores as $store)
+                                    <option value="{{ $store->id_store }}">{{ $store->store_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="id_retailer" class="form-label">Retailer</label>
                             <select name="id_retailer" id="id_retailer" class="form-select">
                                 <option value="">Select Retailer...</option>
+                                @foreach ($retailers as $retailer)
+                                    <option value="{{ $retailer->id_retailer }}">{{ $retailer->retailer_company }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <hr>
@@ -53,7 +59,7 @@
                             <input type="text" name="unique_code" id="unique_code" class="form-control" required>
                         </div>
                         <div id="container-products"></div>
-                        <button type="button" class="btn btn-primary" id="add_product">Add Product</button>                        
+                        <button type="button" class="btn btn-primary" id="add_product">Add Product</button>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -66,6 +72,35 @@
     <!-- Edit User Modal -->
     <div class="modal fade" id="editproductModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered"></div>
-    </div>
-    <script src="{{asset('../logic/products.js')}}"></script>    
+    </div>    
+    <script>
+        var save_products_url = "{{route('load-product')}}";
+
+        var categories = [
+            @foreach ($categories as $category)
+                    {
+                    id: "{{ $category['id_category'] }}",
+                    name: "{{ $category['category'] }}"
+                }{{ !$loop->last ? ',' : '' }}
+            @endforeach
+        ];
+
+        console.log(categories);
+
+        //Function for tester 
+        function call_service() {
+            event.preventDefault();
+            fetch("{{ route('token-get') }}")
+                .then(response => response.json())
+                .then(data => {
+                    console.log("JWT:", data.token);
+                    // You can store it in localStorage or use it directly
+                    localStorage.setItem('jwt_token', data.token);
+                })
+                .catch(error => console.error("Error fetching token:", error));
+        }
+
+    </script>
+    <script src="{{asset('../logic/products.js')}}"></script>
+
 @endsection
