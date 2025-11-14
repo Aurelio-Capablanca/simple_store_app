@@ -48,6 +48,29 @@ function fillSelect(submitted_object, select, selected) {
 
 
 /********************************* */
+document.addEventListener('DOMContentLoaded', () => {
+
+
+    fillSelect(categories, `id_category`, null);
+    document.getElementById('update-product')?.addEventListener('click', function (event) {
+        // ...
+         let products = {
+            "product_name": document.getElementById(`product_name`).value,
+            "product_description": document.getElementById(`product_description`).value,
+            "product_price": guard_empty_value(document.getElementById(`product_price`).value, false, true),
+            "product_stock_number": guard_empty_value(document.getElementById(`product_stock_number`).value, true, false),
+            "has_discount": document.getElementById(`has_discount`).checked,
+            "has_stock": document.getElementById(`has_stock`).checked,
+            "is_available": document.getElementById(`is_available`).checked,
+            "expiring_date": guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
+            "id_category": guard_empty_value(document.getElementById(`id_category`).value, true, false),
+        }
+        console.log(products);
+        //sendPayload(save_products_url, products);
+    });
+});
+
+
 var listCreatedProduct = new Array();
 var counterProducts = 0;
 

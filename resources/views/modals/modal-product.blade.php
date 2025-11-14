@@ -15,11 +15,11 @@
             </div>
             <div class="mb-3">
                 <label for="product_price" class="form-label">product price</label>
-                <input type="text" name="product_price" id="product_price" class="form-control" required>
+                <input  type="number" inputmode="decimal" step="0.50" min="0" name="product_price" id="product_price" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label for="product_stock_number" class="form-label">product Quantity</label>
-                <input type="text" name="product_stock_number" id="product_stock_number" class="form-control" required>
+                <input type="number" step="1" name="product_stock_number" id="product_stock_number" class="form-control" required>
             </div>
             <div class="mb-3 form-check form-switch">
                 <input class="form-check-input" for="has_discount" type="checkbox" id="flexSwitchCheckDefault">
@@ -54,26 +54,9 @@
     </form>
 </div>
 <script>
-    window.addEventListener("beforeunload", (e) => {
-        e.preventDefault();
-        console.log(categories)
-        fillSelect(categories, `id_category`, null)
-    });
-    //fillSelect(categories, `id_category`, null)
+    fillSelect(categories, `id_category`, null);
 
-    document.getElementById('update').addEventListener('click', function (event) {
-        let products = {
-            "product_name": document.getElementById(`product_name`).value,
-            "product_description": document.getElementById(`product_description`).value,
-            "product_price": guard_empty_value(document.getElementById(`product_price`).value, false, true),
-            "product_stock_number": guard_empty_value(document.getElementById(`product_stock_number`).value, true, false),
-            "has_discount": document.getElementById(`has_discount`).checked,
-            "has_stock": document.getElementById(`has_stock`).checked,
-            "is_available": document.getElementById(`is_available`).checked,
-            "expiring_date": guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
-            "id_category": guard_empty_value(document.getElementById(`id_category`).value, true, false),
-        }
-        console.log(products);
-        sendPayload(save_products_url, products);
+    document.getElementById('update-product').addEventListener('click', function (event) {
+       
     });
 </script>
