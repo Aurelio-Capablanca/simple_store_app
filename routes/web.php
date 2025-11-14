@@ -11,7 +11,7 @@ Route::middleware('web')->group(function () {
 
     Route::get('/', function () {
         return view('welcome');
-    });    
+    });
 
     Route::get('/login', function () {
         return view('login');
@@ -64,7 +64,7 @@ Route::middleware('web')->group(function () {
 
         //Store
         Route::get('/stores', [StoreController::class, 'index'])->name('stores.form');
-        Route::get('/edit-store/{id}', [StoreController::class,'edit_modal'])->name('edit-store.modal');
+        Route::get('/edit-store/{id}', [StoreController::class, 'edit_modal'])->name('edit-store.modal');
 
         Route::post('/create-store', [StoreController::class, 'create_stores'])->name('create-store');
         Route::put('/update-store/{id}', [StoreController::class, 'update_store'])->name('update-store');
@@ -81,6 +81,8 @@ Route::middleware('web')->group(function () {
 
         //Entry Products
         Route::get('/products', [ProductController::class, 'index'])->name('product.form');
+        Route::get('/edit-product/{id}', [ProductController::class, 'edit_modal'])->name('edit-product.modal');
+
         Route::post('/load-product', [ProductController::class, 'load_products'])->name('load-product');
 
         //Entry Products

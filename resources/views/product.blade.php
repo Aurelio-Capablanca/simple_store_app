@@ -18,6 +18,46 @@
         <a href="{{route('token-get')}}" class="btn btn-sm btn-info" id="gettoken" onclick="call_service();">
             Get Token
         </a>
+        <!-- table -->
+        <div class="card-body">
+            <div class="col s12 m12 12">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th class="actions-column">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-rows">
+                        @foreach($products as $product)
+                            <tr>
+                                <td>{{$product->product_name}}</td>
+                                <td>{{$product->product_price}}</td>
+                                <td>{{$product->category}}</td>
+                                <td>
+                                    <a href="{{route('edit-product.modal', $product->id_product)}}" class="btn btn-sm btn-info"
+                                        data-bs-toggle="modal" id="editProduct" data-bs-target="#editproductModal"
+                                        onclick="event.preventDefault();">
+                                        Edit
+                                    </a>
+                                    {{-- <button class="btn btn-sm btn-danger">Delete</button> --}}
+                                    <form action="{{-- route('delete-user', $user->id) --}}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this user?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
@@ -69,21 +109,18 @@
             </div>
         </div>
     </div>
-    <!-- Edit User Modal -->
-    <div class="modal fade" id="editproductModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered"></div>
-    </div>    
+
     <script>
         var save_products_url = "{{route('load-product')}}";
 
         var categories = [
             @foreach ($categories as $category)
-                    {
+                            {
                     id: "{{ $category['id_category'] }}",
                     name: "{{ $category['category'] }}"
                 }{{ !$loop->last ? ',' : '' }}
             @endforeach
-        ];
+            ];
 
         console.log(categories);
 
@@ -102,5 +139,8 @@
 
     </script>
     <script src="{{asset('../logic/products.js')}}"></script>
-
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editproductModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"></div>
+    </div>
 @endsection

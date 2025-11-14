@@ -72,12 +72,17 @@ function add_product_element(handler) {
     </div>
     <div class="mb-3">
         <label for="product_price" class="form-label">product price</label>
-        <input type="text" name="product_price-${handler.series_id}" id="product_price-${handler.series_id}"
+        <input type="number" inputmode="decimal" step="0.50" min="0" name="product_price-${handler.series_id}" id="product_price-${handler.series_id}"
+            class="form-control" required>
+    </div>
+     <div class="mb-3">
+        <label for="product_stock_number" class="form-label">product Quantity</label>
+        <input type="number" step="1" name="product_stock_number-${handler.series_id}" id="product_stock_number-${handler.series_id}"
             class="form-control" required>
     </div>
     <div class="mb-3">
         <label for="buying_price" class="form-label">buying price</label>
-        <input type="text" name="buying_price-${handler.series_id}" id="buying_price-${handler.series_id}"
+        <input type="number" inputmode="decimal" step="0.50" min="0" name="buying_price-${handler.series_id}" id="buying_price-${handler.series_id}"
             class="form-control" required>
     </div>
     <div class="mb-3 form-check form-switch">
@@ -168,6 +173,7 @@ function process_form_product() {
             "product_name": document.getElementById(`product_name-${data}`).value,
             "product_description": document.getElementById(`product_description-${data}`).value,
             "product_price": guard_empty_value(document.getElementById(`product_price-${data}`).value, false, true),
+            "product_stock_number" : guard_empty_value(document.getElementById(`product_stock_number-${data}`).value, true, false),
             "buying_price": guard_empty_value(document.getElementById(`buying_price-${data}`).value, false, true),
             "has_discount": document.getElementById(`has_discount-${data}`).checked,
             "has_stock": document.getElementById(`has_stock-${data}`).checked,

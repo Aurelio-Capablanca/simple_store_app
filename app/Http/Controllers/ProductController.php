@@ -38,16 +38,29 @@ class ProductController extends Controller
 
         $categories_data = $this->call_categories();
         $categories = $categories_data['dataset'] ?? [];
+
         $retailers = DB::table('retailer', 'cat')
             ->select('id_retailer', 'retailer_company')
             ->get();
-        $users = DB::table('users', 'usr')->
-            select('name', 'email', 'str.store_name', 'usr.id')
-            ->leftJoin('store as str', 'str.id_store', '=', 'usr.id_store')
-            ->get();
-        return view("product", compact("users", "stores", "retailers", "categories"));
+
+        $products = DB::table('product', 'p')
+        ->select('p.id_product', 'p.product_name', 'p.product_price' , 'c.category' )
+        ->join('category as c', 'c.id_category', '=', 'p.id_product')
+        ->get();
+
+
+        return view("product", compact("products", "stores", "retailers", "categories"));
     }
 
+
+    public function edit_modal($id){
+        $product = DB::table('product', 'p')
+        ->select('p.id_product', 'p.product_name', 'p.product_price' , 'c.category' )
+        ->join('category as c', 'c.id_category', '=', 'p.id_product')
+        ->where('p.id_product','=',$id)
+        ->get();
+        return view('modals/modal-product', compact('product'));
+    }
 
 
 
