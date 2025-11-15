@@ -74,16 +74,16 @@ Route::middleware('web')->group(function () {
         //Store
 
 
-         //Category
+        //Category
         Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
         Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
         Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
-        Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');       
+        Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
         //Category
 
 
         //Location
-         Route::get('/location', [LocationController::class, 'index'])->name('location.index');
+        Route::get('/location', [LocationController::class, 'index'])->name('location.index');
         Route::post('/location', [locationController::class, 'store'])->name('location.store');
         Route::put('/location/{id}', [locationController::class, 'update'])->name('location.update');
         Route::delete('/location/{id}', [locationController::class, 'destroy'])->name('location.destroy');
@@ -95,6 +95,7 @@ Route::middleware('web')->group(function () {
         Route::post('/load-product', [ProductController::class, 'load_products'])->name('load-product');
         Route::post('/update-product', [ProductController::class, 'update_products'])->name('update-product');
         Route::get('/product-get/{id}', [ProductController::class, 'edit_modal'])->name('product-get-one');
+        Route::delete('/delete-product/{id}', [ProductController::class, 'delete_products'])->name('delete-product');
         //Entry Products
 
         //Sells

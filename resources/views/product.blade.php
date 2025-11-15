@@ -45,7 +45,7 @@
                                         Edit
                                     </a>
                                     {{-- <button class="btn btn-sm btn-danger">Delete</button> --}}
-                                    <form action="{{-- route('delete-user', $user->id) --}}" method="POST" class="d-inline">
+                                    <form action="{{ route('delete-product', $product->id_product) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger"

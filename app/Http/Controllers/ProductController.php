@@ -65,7 +65,7 @@ class ProductController extends Controller
             ->header('Content-Type', 'application/json');
     }
 
-     public function update_products(Request $request)
+    public function update_products(Request $request)
     {
         $service_url = 'http://127.0.0.1:9091/api/update-products';
         $token = $this->generate_token();
@@ -82,6 +82,27 @@ class ProductController extends Controller
 
         return response($response->getBody(), $response->getStatusCode())
             ->header('Content-Type', 'application/json');
+    }
+
+
+    public function delete_products($id)
+    {
+        $service_url = 'http://127.0.0.1:9091/api/delete-product';
+        $token = $this->generate_token();
+        $payload = ['id' => (int) $id];
+        $client = new \GuzzleHttp\Client();
+        $response = $client->delete($service_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode($payload),
+        ]);
+
+
+        $data = json_decode($response->getBody(), true);
+        return $data;
     }
 
 
@@ -124,8 +145,8 @@ class ProductController extends Controller
     {
         $service_url = 'http://127.0.0.1:9091/api/get-one-product';
         $token = $this->generate_token();
-        $payload = ['id' => (int)$id];
-                $client = new \GuzzleHttp\Client();
+        $payload = ['id' => (int) $id];
+        $client = new \GuzzleHttp\Client();
         $response = $client->post($service_url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
