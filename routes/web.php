@@ -93,6 +93,7 @@ Route::middleware('web')->group(function () {
         Route::get('/products', [ProductController::class, 'index'])->name('product.form');
 
         Route::post('/load-product', [ProductController::class, 'load_products'])->name('load-product');
+        Route::post('/update-product', [ProductController::class, 'update_products'])->name('update-product');
         Route::get('/product-get/{id}', [ProductController::class, 'edit_modal'])->name('product-get-one');
         //Entry Products
 

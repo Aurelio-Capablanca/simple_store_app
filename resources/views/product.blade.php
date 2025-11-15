@@ -180,6 +180,7 @@
     <!-- Scripts -->
     <script>
         var save_products_url = "{{route('load-product')}}";
+        var update_products_url = "{{route('update-product')}}";
 
         var categories = [
             @foreach ($categories as $category)

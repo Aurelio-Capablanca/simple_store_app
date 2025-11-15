@@ -65,6 +65,25 @@ class ProductController extends Controller
             ->header('Content-Type', 'application/json');
     }
 
+     public function update_products(Request $request)
+    {
+        $service_url = 'http://127.0.0.1:9091/api/update-products';
+        $token = $this->generate_token();
+        $client = new \GuzzleHttp\Client();
+        $payload = $request->getContent();
+        $response = $client->put($service_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+            'body' => $payload,
+        ]);
+
+        return response($response->getBody(), $response->getStatusCode())
+            ->header('Content-Type', 'application/json');
+    }
+
 
     public function call_jwt()
     {

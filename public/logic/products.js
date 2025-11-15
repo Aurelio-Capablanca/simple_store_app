@@ -139,6 +139,8 @@ function appendSafe(selector, content) {
     }
 }
 
+
+var id_product_general = 0;
 function openUpdateModal(url) {
     //event.preventDefault();
     console.log(url);
@@ -150,26 +152,15 @@ function openUpdateModal(url) {
                 if (response.status) {
                     console.log(response);
                     dataset = response.dataset;
+                    id_product_general = dataset.id_product;
                     document.getElementById(`product_name`).value = dataset.product_name;
                     document.getElementById(`product_description`).value = dataset.product_description;
                     document.getElementById(`product_price`).value = dataset.product_price;
                     document.getElementById(`product_stock_number`).value = dataset.product_stock_number;
                     document.getElementById(`has_discount`).checked = false,
                     document.getElementById(`has_stock`).checked = false,
-                    document.getElementById(`is_available`).checked = false,
-                    //guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
-                    //guard_empty_value(document.getElementById(`id_category`).selected, true, false);
-                    fillSelect(categories, `id_category`, dataset.id_category);
-                    // document.getElementById('id_paciente').value = response.dataset.idpaciente;
-                    // document.getElementById('nombre_paciente').value = response.dataset.nombrepaciente;
-                    // document.getElementById('apellido_paciente').value = response.dataset.apellidopaciente;
-                    // document.getElementById('fecha_nacimiento').value = response.dataset.fechanacimiento;
-                    // document.getElementById('dui_paciente').value = response.dataset.duipaciente;
-                    // document.getElementById('direccion_paciente').value = response.dataset.direccionpaciente;
-                    // document.getElementById('telefono_paciente').value = response.dataset.telefonopaciente;
-                    // document.getElementById('correo_cliente').value = response.dataset.correopaciente;
-                    // fillSelect(ENDPOINT_ESTADO, 'estado_paciente', response.dataset.idestadopaciente);                    
-                    // Se actualizan los campos para que las etiquetas (labels) no queden sobre los datos.                    
+                    document.getElementById(`is_available`).checked = false,                    
+                    fillSelect(categories, `id_category`, dataset.id_category);                    
                 } else {
 
                 }
@@ -257,6 +248,7 @@ function guard_empty_value(data, isnumeric, isdouble) {
 document.getElementById('update-product').addEventListener('click', function (event) {
     event.preventDefault();
     let products = {
+        "id_product" : id_product_general,
         "product_name": document.getElementById(`product_name`).value,
         "product_description": document.getElementById(`product_description`).value,
         "product_price": guard_empty_value(document.getElementById(`product_price`).value, false, true),
@@ -265,9 +257,9 @@ document.getElementById('update-product').addEventListener('click', function (ev
         "has_stock": document.getElementById(`has_stock`).checked,
         "is_available": document.getElementById(`is_available`).checked,
         "expiring_date": guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
-        "id_category": guard_empty_value(document.getElementById(`id_category`).selected, true, false),
+        "id_category": guard_empty_value(document.getElementById(`id_category`).value, true, false),
     }
     console.log(products);    
-    //sendPayload(save_products_url, products);
+    sendPayload(update_products_url, products);
 });
 
