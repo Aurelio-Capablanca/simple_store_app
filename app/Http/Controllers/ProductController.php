@@ -28,7 +28,7 @@ class ProductController extends Controller
 
         $products = DB::table('product', 'p')
             ->select('p.id_product', 'p.product_name', 'p.product_price', 'c.category')
-            ->join('category as c', 'c.id_category', '=', 'p.id_product')
+            ->join('category as c', 'c.id_category', '=', 'p.id_category')
             ->get();
 
 

@@ -18,22 +18,17 @@ class CategoryController extends Controller
         $request->validate([
             'category' => 'required|max:50'
         ]);
-
         Category::create($request->all());
-
         return redirect()->route('category.index')->with('success', 'Categoría creada');
     }
 
     public function update(Request $request, $id)
     {
         $cat = Category::findOrFail($id);
-
         $request->validate([
             'category' => 'required|max:50'
         ]);
-
         $cat->update($request->all());
-
         return redirect()->route('category.index')->with('success', 'Categoría actualizada');
     }
 

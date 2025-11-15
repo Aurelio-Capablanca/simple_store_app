@@ -139,17 +139,27 @@ function appendSafe(selector, content) {
     }
 }
 
-function openUpdateModal(url){
+function openUpdateModal(url) {
     //event.preventDefault();
+    console.log(url);
     fetch(url, {
         method: 'get'
     }).then(function (request) {
-        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
         if (request.ok) {
             request.json().then(function (response) {
-                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
                 if (response.status) {
-                    // Se inicializan los campos del formulario con los datos del registro seleccionado.
+                    console.log(response);
+                    dataset = response.dataset;
+                    document.getElementById(`product_name`).value = dataset.product_name;
+                    document.getElementById(`product_description`).value = dataset.product_description;
+                    document.getElementById(`product_price`).value = dataset.product_price;
+                    document.getElementById(`product_stock_number`).value = dataset.product_stock_number;
+                    document.getElementById(`has_discount`).checked = false,
+                    document.getElementById(`has_stock`).checked = false,
+                    document.getElementById(`is_available`).checked = false,
+                    //guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
+                    //guard_empty_value(document.getElementById(`id_category`).selected, true, false);
+                    fillSelect(categories, `id_category`, dataset.id_category);
                     // document.getElementById('id_paciente').value = response.dataset.idpaciente;
                     // document.getElementById('nombre_paciente').value = response.dataset.nombrepaciente;
                     // document.getElementById('apellido_paciente').value = response.dataset.apellidopaciente;
@@ -159,10 +169,9 @@ function openUpdateModal(url){
                     // document.getElementById('telefono_paciente').value = response.dataset.telefonopaciente;
                     // document.getElementById('correo_cliente').value = response.dataset.correopaciente;
                     // fillSelect(ENDPOINT_ESTADO, 'estado_paciente', response.dataset.idestadopaciente);                    
-                    // Se actualizan los campos para que las etiquetas (labels) no queden sobre los datos.
-                    
+                    // Se actualizan los campos para que las etiquetas (labels) no queden sobre los datos.                    
                 } else {
-                    
+
                 }
             });
         } else {
@@ -203,6 +212,7 @@ document.getElementById('save_products').addEventListener('click', function (eve
     }
     console.log(load_product);
     sendPayload(save_products_url, load_product);
+    window.location.reload();
 });
 
 function process_form_product() {
@@ -219,7 +229,7 @@ function process_form_product() {
             "has_stock": document.getElementById(`has_stock-${data}`).checked,
             "is_available": document.getElementById(`is_available-${data}`).checked,
             "expiring_date": guard_empty_value(document.getElementById(`expiring_date-${data}`).value, false, false),
-            "id_category": guard_empty_value(document.getElementById(`id_category-${data}`).selected, true, false),
+            "id_category": guard_empty_value(document.getElementById(`id_category-${data}`).value, true, false),
         })
     });
     return object_list;
@@ -257,33 +267,7 @@ document.getElementById('update-product').addEventListener('click', function (ev
         "expiring_date": guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
         "id_category": guard_empty_value(document.getElementById(`id_category`).selected, true, false),
     }
-    console.log(products);
+    console.log(products);    
     //sendPayload(save_products_url, products);
 });
-
-
-
-/*------------------------------------------------------------------------------------------------------------------------------------ */
-
-document.addEventListener('DOMContentLoaded', function () {
-    const editModal = document.getElementById('editproductModal');
-
-    editModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const url = button.getAttribute('href');
-
-        fetch(url)
-            .then(response => response.text())
-            .then(html => {
-                editModal.querySelector('.modal-dialog').innerHTML = html;
-            })
-            .catch(error => {
-                console.error('Error loading modal:', error);
-            });
-    });
-});
-
-
-
-
 

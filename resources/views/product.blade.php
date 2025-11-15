@@ -15,7 +15,7 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
             New Product
         </button>
-        <a href="{{route('token-get')}}" class="btn btn-sm btn-info" id="gettoken" onclick="call_service();">
+        <a class="btn btn-sm btn-info" id="gettoken" onclick="window.location.reload();">
             Get Token
         </a>
         <!-- table -->
@@ -37,10 +37,11 @@
                                 <td>{{$product->product_price}}</td>
                                 <td>{{$product->category}}</td>
                                 <td>
-                                    <input type="text" value="{{route('product-get-one', $product->id_product)}}" name="" id="">
-                                    <a  class="btn btn-sm btn-info"
-                                        data-bs-toggle="modal" id="editProduct" data-bs-target="#editproductModal"
-                                        onclick="openUpdateModal({{route('product-get-one', $product->id_product)}})">
+                                    <input type="hidden" id="url-{{ $product->id_product }}"
+                                        value="{{route('product-get-one', $product->id_product)}}" name="">                                    
+                                    <a class="btn btn-sm btn-info" data-bs-toggle="modal" id="editProduct"
+                                        data-bs-target="#editproductModal"
+                                        onclick="openUpdateModal( document.getElementById('url-{{ $product->id_product }}').value)">
                                         Edit
                                     </a>
                                     {{-- <button class="btn btn-sm btn-danger">Delete</button> --}}
@@ -110,7 +111,7 @@
             </div>
         </div>
     </div>
-     <!-- Edit User Modal -->
+    <!-- Edit User Modal -->
     <div class="modal fade" id="editproductModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -178,16 +179,16 @@
     </div>
     <!-- Scripts -->
     <script>
-        var save_products_url = "{{route('load-product')}}";        
+        var save_products_url = "{{route('load-product')}}";
 
         var categories = [
             @foreach ($categories as $category)
-                                    {
+                                            {
                     id: "{{ $category['id_category'] }}",
                     name: "{{ $category['category'] }}"
                 }{{ !$loop->last ? ',' : '' }}
             @endforeach
-                ];
+                    ];
 
         console.log(categories);
 
@@ -205,5 +206,5 @@
         }
 
     </script>
-    <script src="{{asset('../logic/products.js')}}"></script>   
+    <script src="{{asset('../logic/products.js')}}"></script>
 @endsection
