@@ -37,9 +37,10 @@
                                 <td>{{$product->product_price}}</td>
                                 <td>{{$product->category}}</td>
                                 <td>
-                                    <a href="{{route('edit-product.modal', $product->id_product)}}" class="btn btn-sm btn-info"
+                                    <input type="text" value="{{route('product-get-one', $product->id_product)}}" name="" id="">
+                                    <a  class="btn btn-sm btn-info"
                                         data-bs-toggle="modal" id="editProduct" data-bs-target="#editproductModal"
-                                        onclick="event.preventDefault();">
+                                        onclick="openUpdateModal({{route('product-get-one', $product->id_product)}})">
                                         Edit
                                     </a>
                                     {{-- <button class="btn btn-sm btn-danger">Delete</button> --}}
@@ -109,18 +110,84 @@
             </div>
         </div>
     </div>
-
+     <!-- Edit User Modal -->
+    <div class="modal fade" id="editproductModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-primary text-white">
+                    <h5 class="modal-title" id="retailerModalLabel">Update Product</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="product_name" class="form-label">product name</label>
+                            <input type="text" name="product_name" id="product_name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product_description" class="form-label">product description</label>
+                            <input type="text" name="product_description" id="product_description" class="form-control"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product_price" class="form-label">product price</label>
+                            <input type="number" inputmode="decimal" step="0.50" min="0" name="product_price"
+                                id="product_price" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="product_stock_number" class="form-label">product Quantity</label>
+                            <input type="number" step="1" name="product_stock_number" id="product_stock_number"
+                                class="form-control" required>
+                        </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input class="form-check-input" for="has_discount" type="checkbox" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" name="has_discount" id="has_discount"
+                                for="flexSwitchCheckDefault">has
+                                discount</label>
+                        </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input class="form-check-input" for="has_stock" type="checkbox" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" name="has_stock" id="has_stock" for="flexSwitchCheckDefault">has
+                                stock</label>
+                        </div>
+                        <div class="mb-3 form-check form-switch">
+                            <input class="form-check-input" for="is_available" type="checkbox" id="flexSwitchCheckDefault">
+                            <label class="form-check-label" name="is_available" id="is_available"
+                                for="flexSwitchCheckDefault">is
+                                available</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="expiring_date">expiring date</label>
+                            <input type="date" class="form-check-label" id="expiring_date" name="expiring_date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_category" class="form-label">Category</label>
+                            <select name="id_category" id="id_category" class="form-select">
+                                <option value="">Select Category...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button id="update-product" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
     <script>
-        var save_products_url = "{{route('load-product')}}";
+        var save_products_url = "{{route('load-product')}}";        
 
         var categories = [
             @foreach ($categories as $category)
-                            {
+                                    {
                     id: "{{ $category['id_category'] }}",
                     name: "{{ $category['category'] }}"
                 }{{ !$loop->last ? ',' : '' }}
             @endforeach
-            ];
+                ];
 
         console.log(categories);
 
@@ -138,9 +205,5 @@
         }
 
     </script>
-    <script src="{{asset('../logic/products.js')}}"></script>
-    <!-- Edit User Modal -->
-    <div class="modal fade" id="editproductModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered"></div>
-    </div>
+    <script src="{{asset('../logic/products.js')}}"></script>   
 @endsection

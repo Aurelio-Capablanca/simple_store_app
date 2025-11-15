@@ -6,6 +6,8 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LocationController;
 
 Route::middleware('web')->group(function () {
 
@@ -72,19 +74,26 @@ Route::middleware('web')->group(function () {
         //Store
 
 
-        //Category
+         //Category
+        Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+        Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+        Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');       
         //Category
 
 
         //Location
+         Route::get('/location', [LocationController::class, 'index'])->name('location.index');
+        Route::post('/location', [locationController::class, 'store'])->name('location.store');
+        Route::put('/location/{id}', [locationController::class, 'update'])->name('location.update');
+        Route::delete('/location/{id}', [locationController::class, 'destroy'])->name('location.destroy');
         //Location
 
         //Entry Products
         Route::get('/products', [ProductController::class, 'index'])->name('product.form');
-        Route::get('/edit-product/{id}', [ProductController::class, 'edit_modal'])->name('edit-product.modal');
 
         Route::post('/load-product', [ProductController::class, 'load_products'])->name('load-product');
-
+        Route::get('/product-get/{id}', [ProductController::class, 'edit_modal'])->name('product-get-one');
         //Entry Products
 
         //Sells

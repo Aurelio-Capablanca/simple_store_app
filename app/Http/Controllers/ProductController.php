@@ -12,23 +12,6 @@ use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
 
-    public function call_categories()
-    {
-        $rust_url = 'http://127.0.0.1:9091/api/get-categories';
-        $token = $this->generate_token();
-
-        $client = new \GuzzleHttp\Client();
-        $response = $client->get($rust_url, [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-                'Accept' => 'application/json',
-            ],
-        ]);
-
-        $data = json_decode($response->getBody(), true);
-        return $data;
-    }
-
     //UI retieval
     public function index()
     {
@@ -44,22 +27,19 @@ class ProductController extends Controller
             ->get();
 
         $products = DB::table('product', 'p')
-        ->select('p.id_product', 'p.product_name', 'p.product_price' , 'c.category' )
-        ->join('category as c', 'c.id_category', '=', 'p.id_product')
-        ->get();
+            ->select('p.id_product', 'p.product_name', 'p.product_price', 'c.category')
+            ->join('category as c', 'c.id_category', '=', 'p.id_product')
+            ->get();
 
 
         return view("product", compact("products", "stores", "retailers", "categories"));
     }
 
 
-    public function edit_modal($id){
-        $product = DB::table('product', 'p')
-        ->select('p.id_product', 'p.product_name', 'p.product_price' , 'c.category' )
-        ->join('category as c', 'c.id_category', '=', 'p.id_product')
-        ->where('p.id_product','=',$id)
-        ->get();
-        return view('modals/modal-product', compact('product'));
+    public function edit_modal($id)
+    {
+        $product = $this->call_single_product($id);
+        return $product;
     }
 
 
@@ -104,6 +84,42 @@ class ProductController extends Controller
     }
 
 
+    public function call_categories()
+    {
+        $rust_url = 'http://127.0.0.1:9091/api/get-categories';
+        $token = $this->generate_token();
+
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get($rust_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+        return $data;
+    }
+
+    public function call_single_product($id)
+    {
+        $service_url = 'http://127.0.0.1:9091/api/get-one-product';
+        $token = $this->generate_token();
+        $payload = ['id' => (int)$id];
+                $client = new \GuzzleHttp\Client();
+        $response = $client->post($service_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode($payload),
+        ]);
+
+
+        $data = json_decode($response->getBody(), true);
+        return $data;
+    }
 
 
     public function generate_token()

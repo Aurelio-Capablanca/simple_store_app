@@ -49,25 +49,7 @@ function fillSelect(submitted_object, select, selected) {
 
 /********************************* */
 document.addEventListener('DOMContentLoaded', () => {
-
-
     fillSelect(categories, `id_category`, null);
-    document.getElementById('update-product')?.addEventListener('click', function (event) {
-        // ...
-         let products = {
-            "product_name": document.getElementById(`product_name`).value,
-            "product_description": document.getElementById(`product_description`).value,
-            "product_price": guard_empty_value(document.getElementById(`product_price`).value, false, true),
-            "product_stock_number": guard_empty_value(document.getElementById(`product_stock_number`).value, true, false),
-            "has_discount": document.getElementById(`has_discount`).checked,
-            "has_stock": document.getElementById(`has_stock`).checked,
-            "is_available": document.getElementById(`is_available`).checked,
-            "expiring_date": guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
-            "id_category": guard_empty_value(document.getElementById(`id_category`).value, true, false),
-        }
-        console.log(products);
-        //sendPayload(save_products_url, products);
-    });
 });
 
 
@@ -157,6 +139,41 @@ function appendSafe(selector, content) {
     }
 }
 
+function openUpdateModal(url){
+    //event.preventDefault();
+    fetch(url, {
+        method: 'get'
+    }).then(function (request) {
+        // Se verifica si la petición es correcta, de lo contrario se muestra un mensaje indicando el problema.
+        if (request.ok) {
+            request.json().then(function (response) {
+                // Se comprueba si la respuesta es satisfactoria, de lo contrario se muestra un mensaje con la excepción.
+                if (response.status) {
+                    // Se inicializan los campos del formulario con los datos del registro seleccionado.
+                    // document.getElementById('id_paciente').value = response.dataset.idpaciente;
+                    // document.getElementById('nombre_paciente').value = response.dataset.nombrepaciente;
+                    // document.getElementById('apellido_paciente').value = response.dataset.apellidopaciente;
+                    // document.getElementById('fecha_nacimiento').value = response.dataset.fechanacimiento;
+                    // document.getElementById('dui_paciente').value = response.dataset.duipaciente;
+                    // document.getElementById('direccion_paciente').value = response.dataset.direccionpaciente;
+                    // document.getElementById('telefono_paciente').value = response.dataset.telefonopaciente;
+                    // document.getElementById('correo_cliente').value = response.dataset.correopaciente;
+                    // fillSelect(ENDPOINT_ESTADO, 'estado_paciente', response.dataset.idestadopaciente);                    
+                    // Se actualizan los campos para que las etiquetas (labels) no queden sobre los datos.
+                    
+                } else {
+                    
+                }
+            });
+        } else {
+            console.log(request.status + ' ' + request.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+
 document.getElementById('add_product').addEventListener('click', function (event) {
     counterProducts++;
     const container = document.getElementById("container-products");
@@ -196,13 +213,13 @@ function process_form_product() {
             "product_name": document.getElementById(`product_name-${data}`).value,
             "product_description": document.getElementById(`product_description-${data}`).value,
             "product_price": guard_empty_value(document.getElementById(`product_price-${data}`).value, false, true),
-            "product_stock_number" : guard_empty_value(document.getElementById(`product_stock_number-${data}`).value, true, false),
+            "product_stock_number": guard_empty_value(document.getElementById(`product_stock_number-${data}`).value, true, false),
             "buying_price": guard_empty_value(document.getElementById(`buying_price-${data}`).value, false, true),
             "has_discount": document.getElementById(`has_discount-${data}`).checked,
             "has_stock": document.getElementById(`has_stock-${data}`).checked,
             "is_available": document.getElementById(`is_available-${data}`).checked,
             "expiring_date": guard_empty_value(document.getElementById(`expiring_date-${data}`).value, false, false),
-            "id_category": guard_empty_value(document.getElementById(`id_category-${data}`).value, true, false),
+            "id_category": guard_empty_value(document.getElementById(`id_category-${data}`).selected, true, false),
         })
     });
     return object_list;
@@ -225,6 +242,26 @@ function guard_empty_value(data, isnumeric, isdouble) {
     }
     return data === "" ? null : data
 }
+
+
+document.getElementById('update-product').addEventListener('click', function (event) {
+    event.preventDefault();
+    let products = {
+        "product_name": document.getElementById(`product_name`).value,
+        "product_description": document.getElementById(`product_description`).value,
+        "product_price": guard_empty_value(document.getElementById(`product_price`).value, false, true),
+        "product_stock_number": guard_empty_value(document.getElementById(`product_stock_number`).value, true, false),
+        "has_discount": document.getElementById(`has_discount`).checked,
+        "has_stock": document.getElementById(`has_stock`).checked,
+        "is_available": document.getElementById(`is_available`).checked,
+        "expiring_date": guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
+        "id_category": guard_empty_value(document.getElementById(`id_category`).selected, true, false),
+    }
+    console.log(products);
+    //sendPayload(save_products_url, products);
+});
+
+
 
 /*------------------------------------------------------------------------------------------------------------------------------------ */
 
