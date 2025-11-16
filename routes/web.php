@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RetailerController;
-use App\Http\Controllers\StoreController;
+use App\Http\Controllers\StoreController;   
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\SalesController;
 
 Route::middleware('web')->group(function () {
 
@@ -99,6 +100,8 @@ Route::middleware('web')->group(function () {
         //Entry Products
 
         //Sells
+        Route::get('/sales', [SalesController::class, 'index'])->name('sales.form');
+        
         //Sells
     });
 });
