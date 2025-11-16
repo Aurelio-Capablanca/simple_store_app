@@ -95,11 +95,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <hr>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Insert Code</label>
-                            <input type="text" name="unique_code" id="unique_code" class="form-control" required>
-                        </div>
+                        <hr>                        
                         <div id="container-products"></div>
                         <button type="button" class="btn btn-primary" id="add_product">Add Product</button>
                     </div>
