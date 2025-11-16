@@ -42,14 +42,14 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button id="save_products" class="btn btn-primary ">Save</button>
+                        <button id="save_sells" class="btn btn-primary ">Save</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <script>
-        var prices_url = "{{route('load-product')}}";
+        var save_sells_url = "{{route('do-sales')}}";
          var products = [
             @foreach ($products as $product)
                                             {

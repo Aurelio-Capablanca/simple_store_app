@@ -22,9 +22,47 @@ class SalesController extends Controller
 
     // Logical
 
+    public function do_sell(Request $request)
+    {
+        $service_url = 'http://127.0.0.1:9091/api/do-sale';
+        $token = $this->generate_token();
+        $client = new \GuzzleHttp\Client();
+        $payload = $request->getContent();
+        $response = $client->post($service_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+            'body' => $payload,
+        ]);
+
+        return response($response->getBody(), $response->getStatusCode())
+            ->header('Content-Type', 'application/json');
+    }
+
     public function call_single_product($id)
     {
         $service_url = 'http://127.0.0.1:9091/api/get-product-price';
+        $token = $this->generate_token();
+        $payload = ['id' => (int) $id];
+        $client = new \GuzzleHttp\Client();
+        $response = $client->post($service_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+            'body' => json_encode($payload),
+        ]);
+        $data = json_decode($response->getBody(), true);
+        return $data;
+    }
+
+
+    public function disable_sell($id)
+    {
+        $service_url = 'http://127.0.0.1:9091/api/disable-sell';
         $token = $this->generate_token();
         $payload = ['id' => (int) $id];
         $client = new \GuzzleHttp\Client();

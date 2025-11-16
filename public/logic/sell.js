@@ -64,6 +64,17 @@ function appendSafe(selector, content) {
     }
 }
 
+
+function guard_empty_value(data, isnumeric, isdouble) {
+    if (isnumeric) {
+        return parseInt(data || 0);
+    }
+    if (isdouble) {
+        return parseFloat(data || 0.0);
+    }
+    return data === "" ? null : data
+}
+
 /*******************************************************************************/
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -145,3 +156,29 @@ document.getElementById('add_product').addEventListener('click', function (event
 
         })
 });
+
+
+document.getElementById('save_sells').addEventListener('click', function (event) {
+    console.log(save_products_url);
+    event.preventDefault();    
+    let sells = {
+        id_store: guard_empty_value(document.getElementById(`id_store`).value, true, false),
+        products: process_form_product()
+    }
+    console.log(sells);
+    //sendPayload(save_products_url, sells);
+    //window.location.reload();
+});
+
+function process_form_product() {
+    let object_list = new Array();
+    listCreatedProduct.forEach(data => {
+        console.log(data);
+        object_list.push({            
+            "id_product": guard_empty_value(document.getElementById(`id_product-${data}`).value, true, false),
+            "total_cart": guard_empty_value(document.getElementById(`product_stock_number-${data}`).value, true, false),
+            "sell_price": guard_empty_value(document.getElementById(`product_price-${data}`).value, false, true),
+        })
+    });
+    return object_list;
+}

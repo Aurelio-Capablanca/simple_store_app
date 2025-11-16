@@ -102,7 +102,9 @@ Route::middleware('web')->group(function () {
         //Sells
         Route::get('/sales', [SalesController::class, 'index'])->name('sales.form');
 
-        Route::get('/get-product-price/{id}', [SalesController::class, 'call_single_product'])->name('get-product-price.form');
+        Route::get('/get-product-price/{id}', [SalesController::class, 'call_single_product'])->name('get-product-price');
+        Route::get('/disable-sell/{id}', [SalesController::class, 'disable_sell'])->name('disable-sell');
+        Route::post('/do-sales', [SalesController::class, 'do_sell'])->name('do-sales');
         //Sells
     });
 });
