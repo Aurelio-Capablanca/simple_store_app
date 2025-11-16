@@ -46,6 +46,35 @@ function fillSelect(submitted_object, select, selected) {
     document.getElementById(select).innerHTML = content;
 }
 
+function appendSafe(selector, content) {
+    const querySelection = document.querySelector(selector);
+    if (typeof content === 'string') {
+        querySelection.insertAdjacentHTML('beforeend', content);
+    } else if (content instanceof Node) {
+        querySelection.appendChild(content);
+    } else {
+        console.warn('Unsupported type for appendSafe');
+    }
+}
+
+
+function UI_handler(series_id, ui_object) {
+    return {
+        "series_id": series_id,
+        "ui_object": ui_object
+    }
+}
+
+
+function guard_empty_value(data, isnumeric, isdouble) {
+    if (isnumeric) {
+        return parseInt(data || 0);
+    }
+    if (isdouble) {
+        return parseFloat(data || 0.0);
+    }
+    return data === "" ? null : data
+}
 
 /********************************* */
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,12 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 var listCreatedProduct = new Array();
 var counterProducts = 0;
 
-function UI_handler(series_id, ui_object) {
-    return {
-        "series_id": series_id,
-        "ui_object": ui_object
-    }
-}
+
 
 function add_product_element(handler) {
     return `<div id="product-create-${handler.series_id}">
@@ -128,16 +152,7 @@ function add_product_element(handler) {
 </div>`;
 }
 
-function appendSafe(selector, content) {
-    const querySelection = document.querySelector(selector);
-    if (typeof content === 'string') {
-        querySelection.insertAdjacentHTML('beforeend', content);
-    } else if (content instanceof Node) {
-        querySelection.appendChild(content);
-    } else {
-        console.warn('Unsupported type for appendSafe');
-    }
-}
+
 
 
 var id_product_general = 0;
@@ -233,17 +248,6 @@ function process_bill() {
         "timestamp_bill_retailer": guard_empty_value(document.getElementById('timestap_bill_retailer').value, false, false),
     }
 }
-
-function guard_empty_value(data, isnumeric, isdouble) {
-    if (isnumeric) {
-        return parseInt(data || 0);
-    }
-    if (isdouble) {
-        return parseFloat(data || 0.0);
-    }
-    return data === "" ? null : data
-}
-
 
 document.getElementById('update-product').addEventListener('click', function (event) {
     event.preventDefault();
