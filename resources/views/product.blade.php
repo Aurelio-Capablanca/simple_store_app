@@ -138,20 +138,20 @@
                                 class="form-control" required>
                         </div>
                         <div class="mb-3 form-check form-switch">
-                            <input class="form-check-input" for="has_discount" type="checkbox" id="flexSwitchCheckDefault">
+                            <input class="form-check-input" for="has_discount" type="checkbox" id="flexSwitchCheckDefault" style="display:none">
                             <label class="form-check-label" name="has_discount" id="has_discount"
-                                for="flexSwitchCheckDefault">has
+                                for="flexSwitchCheckDefault" style="display:none">has
                                 discount</label>
                         </div>
                         <div class="mb-3 form-check form-switch">
-                            <input class="form-check-input" for="has_stock" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" name="has_stock" id="has_stock" for="flexSwitchCheckDefault">has
+                            <input class="form-check-input" for="has_stock" type="checkbox" id="flexSwitchCheckDefault" style="display:none">
+                            <label class="form-check-label" name="has_stock" id="has_stock" for="flexSwitchCheckDefault" style="display:none">has
                                 stock</label>
                         </div>
                         <div class="mb-3 form-check form-switch">
-                            <input class="form-check-input" for="is_available" type="checkbox" id="flexSwitchCheckDefault">
+                            <input class="form-check-input" for="is_available" type="checkbox" id="flexSwitchCheckDefault" style="display:none">
                             <label class="form-check-label" name="is_available" id="is_available"
-                                for="flexSwitchCheckDefault">is
+                                for="flexSwitchCheckDefault" style="display:none">is
                                 available</label>
                         </div>
                         <div class="mb-3">

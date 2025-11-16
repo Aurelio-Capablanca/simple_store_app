@@ -115,24 +115,24 @@ function add_product_element(handler) {
             class="form-control" required>
     </div>
     <div class="mb-3 form-check form-switch">
-        <input class="form-check-input" for="has_discount-${handler.series_id}" type="checkbox"
+        <input style="display:none" class="form-check-input" for="has_discount-${handler.series_id}" type="checkbox"
             id="flexSwitchCheckDefault">
         <label class="form-check-label" name="has_discount-${handler.series_id}" id="has_discount-${handler.series_id}"
-            for="flexSwitchCheckDefault">has
+            for="flexSwitchCheckDefault" style="display:none">has
             discount</label>
     </div>
     <div class="mb-3 form-check form-switch">
-        <input class="form-check-input" for="has_stock-${handler.series_id}" type="checkbox"
+        <input style="display:none" class="form-check-input" for="has_stock-${handler.series_id}" type="checkbox"
             id="flexSwitchCheckDefault">
         <label class="form-check-label" name="has_stock-${handler.series_id}" id="has_stock-${handler.series_id}"
-            for="flexSwitchCheckDefault">has
+            for="flexSwitchCheckDefault" style="display:none">has
             stock</label>
     </div>
     <div class="mb-3 form-check form-switch">
-        <input class="form-check-input" for="is_available-${handler.series_id}" type="checkbox"
+        <input style="display:none" class="form-check-input" for="is_available-${handler.series_id}" type="checkbox"
             id="flexSwitchCheckDefault">
         <label class="form-check-label" name="is_available-${handler.series_id}" id="is_available-${handler.series_id}"
-            for="flexSwitchCheckDefault">is
+            for="flexSwitchCheckDefault" style="display:none">is
             available</label>
     </div>
     <div class="mb-3">
@@ -173,9 +173,9 @@ function openUpdateModal(url) {
                     document.getElementById(`product_price`).value = dataset.product_price;
                     document.getElementById(`product_stock_number`).value = dataset.product_stock_number;
                     document.getElementById(`has_discount`).checked = false,
-                    document.getElementById(`has_stock`).checked = false,
-                    document.getElementById(`is_available`).checked = false,                    
-                    fillSelect(categories, `id_category`, dataset.id_category);                    
+                        document.getElementById(`has_stock`).checked = false,
+                        document.getElementById(`is_available`).checked = false,
+                        fillSelect(categories, `id_category`, dataset.id_category);
                 } else {
 
                 }
@@ -252,7 +252,7 @@ function process_bill() {
 document.getElementById('update-product').addEventListener('click', function (event) {
     event.preventDefault();
     let products = {
-        "id_product" : id_product_general,
+        "id_product": id_product_general,
         "product_name": document.getElementById(`product_name`).value,
         "product_description": document.getElementById(`product_description`).value,
         "product_price": guard_empty_value(document.getElementById(`product_price`).value, false, true),
@@ -263,7 +263,8 @@ document.getElementById('update-product').addEventListener('click', function (ev
         "expiring_date": guard_empty_value(document.getElementById(`expiring_date`).value, false, false),
         "id_category": guard_empty_value(document.getElementById(`id_category`).value, true, false),
     }
-    console.log(products);    
+    console.log(products);
     sendPayload(update_products_url, products);
+    window.location.reload();
 });
 

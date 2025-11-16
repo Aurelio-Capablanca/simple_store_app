@@ -11,17 +11,19 @@ class SalesController extends Controller
 {
     public function index()
     {
-        $products =  DB::table('product', 'p')
+        $products = DB::table('product', 'p')
             ->select('p.id_product', 'p.product_name')
             ->get();
-        $stores =  DB::table('store', 's')
+        $stores = DB::table('store', 's')
             ->select('s.id_store', 's.store_name')
             ->get();
-        return view("sales", compact("products","stores"));
+        $sales = DB::table('sales', 's');
+        
+        return view("sales", compact("products", "stores"));
     }
 
-    // Logical
 
+    // Logical
     public function do_sell(Request $request)
     {
         $service_url = 'http://127.0.0.1:9091/api/do-sale';
