@@ -6,8 +6,7 @@
   </div>
   <form action="{{ route('update-user', $user->id) }}" method="POST">
     @csrf
-    @method('PUT')
-    <a href="">{{ $user->id }}</a>
+    @method('PUT')   
     <div class="modal-body">
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>

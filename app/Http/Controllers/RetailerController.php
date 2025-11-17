@@ -11,12 +11,14 @@ class RetailerController extends Controller
     //UI Retrievals
     public function index() {
         $retailers = Retailer::all();
+        //dd($retailers);
         return view("retailer", compact("retailers"));
     }
 
 
     public function edit_modal($id){
-        $retailer = Retailer::find($id)->first();
+        //dd($id); 
+        $retailer = Retailer::find($id);
         return view("modals/modal-retailer", compact("retailer"));
     }
 
