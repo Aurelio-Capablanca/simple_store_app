@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Store;
 use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -91,7 +89,7 @@ class ProductController extends Controller
         $token = $this->generate_token();
         $payload = ['id' => (int) $id];
         $client = new \GuzzleHttp\Client();
-        $response = $client->delete($service_url, [
+        /*$response =*/ $client->delete($service_url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
@@ -101,8 +99,9 @@ class ProductController extends Controller
         ]);
 
 
-        $data = json_decode($response->getBody(), true);
-        return $data;
+        // $data = json_decode($response->getBody(), true);
+        // return $data;
+        return redirect()->route("product.form")->with("success", "Product Deleted");
     }
 
 

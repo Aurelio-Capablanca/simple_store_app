@@ -13,42 +13,54 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active bg-gradient-dark text-white" href="../pages/dashboard.html">
+                <a class="nav-link active bg-gradient-dark text-white" href="{{ route('dashboard.form') }}">
                     <i class="material-symbols-rounded opacity-5">dashboard</i>
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="../pages/tables.html">
+                <a class="nav-link text-dark" href="{{ route('users.form') }}">
                     <i class="material-symbols-rounded opacity-5">table_view</i>
-                    <span class="nav-link-text ms-1">Tables</span>
+                    <span class="nav-link-text ms-1">Users</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="../pages/billing.html">
+                <a class="nav-link text-dark" href="{{ route('retailer.form') }}">
                     <i class="material-symbols-rounded opacity-5">receipt_long</i>
-                    <span class="nav-link-text ms-1">Billing</span>
+                    <span class="nav-link-text ms-1">Retailer</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="../pages/virtual-reality.html">
+                <a class="nav-link text-dark" href="{{ route('stores.form') }}">
                     <i class="material-symbols-rounded opacity-5">view_in_ar</i>
-                    <span class="nav-link-text ms-1">Virtual Reality</span>
+                    <span class="nav-link-text ms-1">Stores</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="../pages/rtl.html">
+                <a class="nav-link text-dark" href="{{ route('category.index') }}">
                     <i class="material-symbols-rounded opacity-5">format_textdirection_r_to_l</i>
-                    <span class="nav-link-text ms-1">RTL</span>
+                    <span class="nav-link-text ms-1">Category</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-dark" href="../pages/notifications.html">
+                <a class="nav-link text-dark" href="{{ route('location.index') }}">
                     <i class="material-symbols-rounded opacity-5">notifications</i>
-                    <span class="nav-link-text ms-1">Notifications</span>
+                    <span class="nav-link-text ms-1">Locations</span>
                 </a>
             </li>
-            <li class="nav-item mt-3">
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{{ route('product.form') }}">
+                    <i class="material-symbols-rounded opacity-5">notifications</i>
+                    <span class="nav-link-text ms-1">Product</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="{{ route('sales.form') }}">
+                    <i class="material-symbols-rounded opacity-5">notifications</i>
+                    <span class="nav-link-text ms-1">Sales</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-dark font-weight-bolder opacity-5">Account pages</h6>
             </li>
             <li class="nav-item">
@@ -68,10 +80,10 @@
                     <i class="material-symbols-rounded opacity-5">assignment</i>
                     <span class="nav-link-text ms-1">Sign Up</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    <!-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
         <div class="mx-3">
             <a class="btn btn-outline-dark mt-4 w-100"
                 href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-dashboard?ref=sidebarfree"
@@ -80,5 +92,5 @@
                 href="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree" type="button">Upgrade
                 to pro</a>
         </div>
-    </div>
+    </div> -->
 </aside>

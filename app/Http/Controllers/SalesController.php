@@ -17,9 +17,10 @@ class SalesController extends Controller
         $stores = DB::table('store', 's')
             ->select('s.id_store', 's.store_name')
             ->get();
-        $sales = DB::table('sales', 's');
-        
-        return view("sales", compact("products", "stores"));
+        $sales = $this -> call_all_products()['dataset'];
+        //dd($sales);
+
+        return view("sales", compact("products", "stores", "sales"));
     }
 
 
@@ -61,6 +62,22 @@ class SalesController extends Controller
         return $data;
     }
 
+    public function call_all_products()
+    {
+        $service_url = 'http://127.0.0.1:9091/api/get-sales';
+        $token = $this->generate_token();     
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get($service_url, [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],          
+        ]);
+        $data = json_decode($response->getBody(), true);
+        return $data;
+    }
+
 
     public function disable_sell($id)
     {
@@ -68,7 +85,7 @@ class SalesController extends Controller
         $token = $this->generate_token();
         $payload = ['id' => (int) $id];
         $client = new \GuzzleHttp\Client();
-        $response = $client->post($service_url, [
+        /*$response = */$client->post($service_url, [
             'headers' => [
                 'Authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
@@ -76,8 +93,9 @@ class SalesController extends Controller
             ],
             'body' => json_encode($payload),
         ]);
-        $data = json_decode($response->getBody(), true);
-        return $data;
+        // $data = json_decode($response->getBody(), true);
+        // return $data;
+        return redirect()->route("sales.form")->with("success", "Sales Deleted");
     }
 
     public function generate_token()

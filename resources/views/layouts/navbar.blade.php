@@ -9,14 +9,14 @@
             </ol>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <!-- <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                 <div class="input-group input-group-outline">
                     <label class="form-label">Type here...</label>
                     <input type="text" class="form-control">
                 </div>
-            </div>
+            </div> -->
             <ul class="navbar-nav d-flex align-items-center  justify-content-end">
-                <li class="nav-item d-flex align-items-center">
+                <!-- <li class="nav-item d-flex align-items-center">
                     <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank"
                         href="https://www.creative-tim.com/builder?ref=navbar-material-dashboard">Online Builder</a>
                 </li>
@@ -24,7 +24,7 @@
                     <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard"
                         data-icon="octicon-star" data-size="large" data-show-count="true"
                         aria-label="Star creativetimofficial/material-dashboard on GitHub">Star</a>
-                </li>
+                </li> -->
                 <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
@@ -40,11 +40,11 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown pe-3 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
+                    <!-- <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="material-symbols-rounded">notifications</i>
-                    </a>
-                    <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
+                    </a> -->
+                    <!-- <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4"
                         aria-labelledby="dropdownMenuButton">
                         <li class="mb-2">
                             <a class="dropdown-item border-radius-md" href="javascript:;">
@@ -120,7 +120,7 @@
                                 </div>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <li class="nav-item d-flex align-items-center">
                     <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">

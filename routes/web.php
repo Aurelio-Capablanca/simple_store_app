@@ -41,7 +41,7 @@ Route::middleware('web')->group(function () {
         Route::get(
             '/users',
             [UserController::class, 'index']
-        )->name('users.form');
+        )->name(name: 'users.form');
 
         Route::get('/edit-users/{id}', [UserController::class, 'edit_modal'])
             ->name('edit-user.modal');
@@ -103,7 +103,7 @@ Route::middleware('web')->group(function () {
         Route::get('/sales', [SalesController::class, 'index'])->name('sales.form');
 
         Route::get('/get-product-price/{id}', [SalesController::class, 'call_single_product'])->name('get-product-price');
-        Route::get('/disable-sell/{id}', [SalesController::class, 'disable_sell'])->name('disable-sell');
+        Route::delete('/disable-sell/{id}', [SalesController::class, 'disable_sell'])->name('disable-sell');
         Route::post('/do-sales', [SalesController::class, 'do_sell'])->name('do-sales');
         //Sells
     });

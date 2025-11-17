@@ -15,6 +15,43 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sellModal">
             New Sale
         </button>
+        <!-- table -->
+        <div class="card-body">
+            <div class="col s12 m12 12">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Products Sold</th>
+                            <th>Total Sold</th>
+                            <th>Person in Charge</th>
+                            <th>Timestamp Sold</th>
+                            <th class="actions-column">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-rows">
+                        @foreach($sales as $sale)
+                            <tr>
+                                <td>{{$sale['products']}}</td>
+                                <td>{{$sale['total_sold']}}</td>
+                                <td>{{$sale['in_charge_name']}}</td>
+                                <td>{{$sale['time_stamp']}}</td>
+                                <td>                                   
+                                    {{-- <button class="btn btn-sm btn-danger">Delete</button> --}}
+                                    <form action="{{ route('disable-sell', $sale['id_sold']) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this row?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="sellModal" tabindex="-1" aria-labelledby="sellModalLabel" aria-hidden="true">
