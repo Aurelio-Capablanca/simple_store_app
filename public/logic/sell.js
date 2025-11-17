@@ -15,7 +15,13 @@ function sendPayload(api, data) {
     }).then(function (request) {
         if (request.ok) {
             request.json().then(function (response) {
-                alert('Success!');
+                if (response.status != 0) { 
+                    alert('Success!'); 
+                    window.location.reload();
+                }
+                else {
+                    alert('error : '+response.message)
+                }
             });
         } else {
             console.log(request.status + ' ' + request.text);
@@ -167,7 +173,6 @@ document.getElementById('save_sells').addEventListener('click', function (event)
     }
     console.log(sells);
     sendPayload(save_sells_url, sells);
-    window.location.reload();
 });
 
 function process_form_product() {
