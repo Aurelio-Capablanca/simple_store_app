@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RetailerController;
-use App\Http\Controllers\StoreController;   
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -27,6 +27,8 @@ Route::middleware('web')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     //For Secured Endpoints
     Route::middleware('auth')->group(function () {
+
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         Route::get('/dashboard', function () {
             return view('dashboard');
